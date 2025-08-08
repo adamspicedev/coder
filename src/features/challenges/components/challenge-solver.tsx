@@ -243,7 +243,7 @@ export const ChallengeSolver: React.FC<ChallengeSolverProps> = ({ challengeId })
           {!testResults && !runTests.isPending && !submitChallenge.isPending && !runTests.error && !submitChallenge.error && (
             <div className="text-center text-gray-500 py-8">
               <Play className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-              <p>Click "Run Tests" to execute your code</p>
+              <p>Click &quot;Run Tests&quot; to execute your code</p>
             </div>
           )}
         </div>

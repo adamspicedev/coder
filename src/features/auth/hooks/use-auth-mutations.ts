@@ -14,7 +14,7 @@ export const useSignIn = () => {
       queryClient.setQueryData(["auth"], data.user);
       router.push("/dashboard");
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       console.error("Sign in error:", error);
     },
   });
@@ -33,7 +33,7 @@ export const useSignUp = () => {
       queryClient.setQueryData(["auth"], data.user);
       router.push("/auth/signin?message=Account created successfully");
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       console.error("Sign up error:", error);
     },
   });
@@ -51,7 +51,7 @@ export const useSignOut = () => {
       queryClient.invalidateQueries({ queryKey: ["auth"] });
       router.push("/auth/signin");
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       console.error("Sign out error:", error);
     },
   });

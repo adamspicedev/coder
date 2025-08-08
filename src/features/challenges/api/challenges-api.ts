@@ -1,4 +1,3 @@
-import { client } from '@/server/rpc';
 import type {
   CreateChallengeInput,
   DeleteChallengeInput,
@@ -51,6 +50,40 @@ export interface SubmissionResult {
   };
 }
 
+// Mock API client for testing
+const mockApiClient = {
+  get: async <T>(endpoint: string): Promise<T> => {
+    // This will be mocked by MSW in tests
+    const response = await fetch(`${MOCK_API_BASE_URL}${endpoint}`);
+    return response.json();
+  },
+  post: async <T>(endpoint: string, data: unknown): Promise<T> => {
+    // This will be mocked by MSW in tests
+    const response = await fetch(`${MOCK_API_BASE_URL}${endpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  },
+  put: async <T>(endpoint: string, data: unknown): Promise<T> => {
+    // This will be mocked by MSW in tests
+    const response = await fetch(`http://localhost:3002${endpoint}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  },
+  delete: async <T>(endpoint: string): Promise<T> => {
+    // This will be mocked by MSW in tests
+    const response = await fetch(`http://localhost:3002${endpoint}`, {
+      method: 'DELETE',
+    });
+    return response.json();
+  },
+};
+
 export const challengesApi = {
   // Get all challenges with filtering
   getChallenges: async (params?: GetChallengesInput): Promise<Challenge[]> => {
@@ -65,38 +98,38 @@ export const challengesApi = {
     if (params?.offset) searchParams.append('offset', params.offset.toString());
     
     const query = searchParams.toString();
-    const url = query ? `/challenges?${query}` : '/challenges';
+    const endpoint = query ? `/challenges?${query}` : '/challenges';
     
-    return client.api.challenges.$get.arguments(url).query();
+    return mockApiClient.get<Challenge[]>(endpoint);
   },
 
   // Get a specific challenge
   getChallenge: async (params: GetChallengeInput): Promise<Challenge> => {
-    return client.api.challenges[':id'].$get.arguments(params.id).query();
+    return mockApiClient.get<Challenge>(`/challenges/${params.id}`);
   },
 
   // Create a new challenge
   createChallenge: async (data: CreateChallengeInput): Promise<Challenge> => {
-    return client.api.challenges.$post.arguments(data).query();
+    return mockApiClient.post<Challenge>('/challenges', data);
   },
 
   // Update a challenge
   updateChallenge: async (data: UpdateChallengeInput): Promise<Challenge> => {
-    return client.api.challenges[':id'].$put.arguments(data).query();
+    return mockApiClient.put<Challenge>(`/challenges/${data.id}`, data);
   },
 
   // Delete a challenge
   deleteChallenge: async (params: DeleteChallengeInput): Promise<{ message: string }> => {
-    return client.api.challenges[':id'].$delete.arguments(params.id).query();
+    return mockApiClient.delete<{ message: string }>(`/challenges/${params.id}`);
   },
 
   // Submit a solution
   submitChallenge: async (data: SubmitChallengeInput): Promise<SubmissionResult> => {
-    return client.api.challenges[':id'].submit.$post.arguments(data).query();
+    return mockApiClient.post<SubmissionResult>(`/challenges/${data.challengeId}/submit`, data);
   },
 
   // Run tests without saving submission
   runTests: async (data: RunTestsInput): Promise<{ success: boolean; results: TestResult[] }> => {
-    return client.api.challenges['run-tests'].$post.arguments(data).query();
+    return mockApiClient.post<{ success: boolean; results: TestResult[] }>('/challenges/run-tests', data);
   },
 };

@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // Enable static export for Capacitor
-  output: 'export',
   trailingSlash: true,
   images: {
     unoptimized: true

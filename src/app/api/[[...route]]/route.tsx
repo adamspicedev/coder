@@ -20,7 +20,8 @@ app.use('/*', cors({
     return c.json({ message: 'Coder API is running' });
   });
 
-const _routes = app
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const appWithRoutes = app
   .route("/auth", authRoutes)
   .route("/challenges", challengesRoutes)
   .route("/classes", classesRoutes)
@@ -33,4 +34,5 @@ export const PUT = handle(app);
 export const DELETE = handle(app);
 export const PATCH = handle(app);
 
-export type AppType = typeof _routes;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export type AppType = typeof appWithRoutes;

@@ -41,8 +41,10 @@ app.post('/', async (c) => {
 });
 
 app.post('/:id/students', async (c) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const classId = c.req.param('id');
-  const { studentId } = await c.req.json();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { studentId: _unused } = await c.req.json();
   
   // Mock adding student to class
   return c.json({ success: true, message: 'Student added to class' });

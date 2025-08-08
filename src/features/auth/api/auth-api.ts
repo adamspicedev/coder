@@ -3,18 +3,25 @@ import type { AuthResponse, SignInCredentials, SignUpCredentials, User } from "@
 
 export const authApi = {
   signIn: async (credentials: SignInCredentials): Promise<AuthResponse> => {
-    return client.api.auth.signin.$post.arguments(credentials).query();
+    const response = await client.api.auth.signin.$post({ json: credentials });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return response.json() as any;
   },
 
   signUp: async (credentials: SignUpCredentials): Promise<AuthResponse> => {
-    return client.api.auth.signup.$post.arguments(credentials).query();
+    const response = await client.api.auth.signup.$post({ json: credentials });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return response.json() as any;
   },
 
   getCurrentUser: async (): Promise<User> => {
-    return client.api.auth.session.$get.arguments().query();
+    const response = await client.api.auth.session.$get();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = await response.json() as any;
+    return data.user;
   },
 
   signOut: async (): Promise<void> => {
-    return client.api.auth.signout.$post.arguments({}).query();
+    await client.api.auth.signout.$post({ json: {} });
   },
 };
