@@ -26,8 +26,7 @@ export const SignUpForm = () => {
       return;
     }
 
-    const { ...signUpData } = formData;
-    await signUp.mutateAsync(signUpData);
+    await signUp.mutateAsync(formData);
   };
 
   return (
