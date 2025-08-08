@@ -54,12 +54,12 @@ export interface SubmissionResult {
 const mockApiClient = {
   get: async <T>(endpoint: string): Promise<T> => {
     // This will be mocked by MSW in tests
-    const response = await fetch(`http://localhost:3002${endpoint}`);
+    const response = await fetch(`${MOCK_API_BASE_URL}${endpoint}`);
     return response.json();
   },
   post: async <T>(endpoint: string, data: unknown): Promise<T> => {
     // This will be mocked by MSW in tests
-    const response = await fetch(`http://localhost:3002${endpoint}`, {
+    const response = await fetch(`${MOCK_API_BASE_URL}${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
