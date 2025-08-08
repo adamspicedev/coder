@@ -29,9 +29,10 @@ export const authClient: AuthClient = {
         } else {
           return { error: data.error || 'Authentication failed' };
         }
-      } catch (error) {
-        return { error: 'Network error' };
-      }
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_error) {
+      return { error: 'Network error' };
+    }
     },
   },
   signOut: async () => {

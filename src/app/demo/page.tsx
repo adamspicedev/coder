@@ -13,10 +13,18 @@ const mockChallenge = {
 }`,
   difficulty: "easy" as const,
   category: "JavaScript Basics",
-  testCases: [
+  language: "javascript",
+  points: 10,
+  timeLimit: 30,
+  order: 1,
+  isActive: true,
+  createdAt: "2024-01-01T00:00:00Z",
+  updatedAt: "2024-01-01T00:00:00Z",
+  createdBy: "demo-user",
+  tests: [
     {
-      input: "helloWorld()",
-      expectedOutput: "Hello, World!",
+      name: "Test 1",
+      test: "helloWorld()",
       description: "Should return 'Hello, World!'",
     },
   ],

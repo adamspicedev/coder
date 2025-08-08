@@ -146,6 +146,7 @@ Your function should:
         difficulty: challenge.difficulty as 'easy' | 'medium' | 'hard',
         category: challenge.category,
         order: challenge.order,
+        createdBy: admin[0].id,
       });
     }
 

@@ -18,14 +18,21 @@ export interface RecentActivity {
 
 export const dashboardApi = {
   getStats: async (): Promise<DashboardStats> => {
-    return client.api.dashboard.stats.$get.arguments().query();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response = await (client.api as any).dashboard.stats.$get();
+    return response.json();
   },
 
   getRecentActivity: async (): Promise<RecentActivity[]> => {
-    return client.api.dashboard.activity.$get.arguments().query();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response = await (client.api as any).dashboard.activity.$get();
+    return response.json();
   },
 
   getCurrentUser: async (): Promise<User> => {
-    return client.api.auth.session.$get.arguments().query();
+    const response = await client.api.auth.session.$get();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = await response.json() as any;
+    return data.user;
   },
 };

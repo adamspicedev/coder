@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Play, CheckCircle, XCircle, RotateCcw } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckCircle, Play, RotateCcw, XCircle } from 'lucide-react';
+import { useState } from 'react';
 
 interface Challenge {
   id: string;
@@ -17,13 +17,13 @@ interface Challenge {
 
 interface ChallengeEditorProps {
   challenge: Challenge;
-  onSubmit: (code: string) => Promise<{ passed: boolean; results: any[] }>;
+  onSubmit: (code: string) => Promise<{ passed: boolean; results: unknown[] }>;
 }
 
 export function ChallengeEditor({ challenge, onSubmit }: ChallengeEditorProps) {
   const [code, setCode] = useState(challenge.starterCode);
   const [isRunning, setIsRunning] = useState(false);
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<unknown[]>([]);
   const [passed, setPassed] = useState<boolean | null>(null);
 
   const handleRunTests = async () => {
@@ -132,41 +132,45 @@ export function ChallengeEditor({ challenge, onSubmit }: ChallengeEditorProps) {
           {results.length === 0 ? (
             <div className="text-center text-gray-500 mt-8">
               <Play className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-              <p>Click "Run Tests" to see your results</p>
+              <p>Click &quot;Run Tests&quot; to see your results</p>
             </div>
           ) : (
             <div className="space-y-4">
-              {results.map((result, index) => (
-                <Card key={index}>
-                  <CardHeader className="pb-2">
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-sm">Test {index + 1}</CardTitle>
-                      {result.passed ? (
-                        <CheckCircle className="h-4 w-4 text-green-600" />
-                      ) : (
-                        <XCircle className="h-4 w-4 text-red-600" />
-                      )}
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    {result.error ? (
-                      <p className="text-sm text-red-600">{result.error}</p>
-                    ) : (
-                      <div className="space-y-2">
-                        <div className="text-sm">
-                          <span className="font-medium">Input:</span> {result.input}
-                        </div>
-                        <div className="text-sm">
-                          <span className="font-medium">Expected:</span> {result.expected}
-                        </div>
-                        <div className="text-sm">
-                          <span className="font-medium">Output:</span> {result.output}
-                        </div>
+              {results.map((result, index) => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const testResult = result as any;
+                return (
+                  <Card key={index}>
+                    <CardHeader className="pb-2">
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="text-sm">Test {index + 1}</CardTitle>
+                        {testResult.passed ? (
+                          <CheckCircle className="h-4 w-4 text-green-600" />
+                        ) : (
+                          <XCircle className="h-4 w-4 text-red-600" />
+                        )}
                       </div>
-                    )}
-                  </CardContent>
-                </Card>
-              ))}
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      {testResult.error ? (
+                        <p className="text-sm text-red-600">{testResult.error}</p>
+                      ) : (
+                        <div className="space-y-2">
+                          <div className="text-sm">
+                            <span className="font-medium">Input:</span> {testResult.input}
+                          </div>
+                          <div className="text-sm">
+                            <span className="font-medium">Expected:</span> {testResult.expected}
+                          </div>
+                          <div className="text-sm">
+                            <span className="font-medium">Output:</span> {testResult.output}
+                          </div>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           )}
         </div>

@@ -37,7 +37,8 @@ const app = new Hono().post('/signin', async (c) => {
       }
       
       // Return user data (without password)
-      const { password: _, ...userWithoutPassword } = user;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password: _unused, ...userWithoutPassword } = user;
       
       console.log('Authentication successful for user:', email);
       return c.json({ 
@@ -86,7 +87,8 @@ const app = new Hono().post('/signin', async (c) => {
       }).returning();
       
       // Return user data (without password)
-      const { password: _, ...userWithoutPassword } = newUser;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password: _unused, ...userWithoutPassword } = newUser;
       
       return c.json({ 
         user: userWithoutPassword,

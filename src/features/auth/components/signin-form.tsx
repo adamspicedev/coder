@@ -43,11 +43,12 @@ export const SignInForm = () => {
             }}
             className="space-y-4"
           >
-            {signIn.error && (
+            {signIn.error ? (
               <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
-                {signIn.error.message || "An error occurred during sign in"}
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                {(signIn.error as any)?.message || "An error occurred during sign in"}
               </div>
-            )}
+            ) : null}
 
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium">
@@ -131,7 +132,7 @@ export const SignInForm = () => {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link href="/auth/signup" className="text-blue-600 hover:underline">
                 Sign up
               </Link>

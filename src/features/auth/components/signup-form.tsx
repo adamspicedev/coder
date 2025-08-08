@@ -26,7 +26,7 @@ export const SignUpForm = () => {
       return;
     }
 
-    const { confirmPassword, ...signUpData } = formData;
+    const { ...signUpData } = formData;
     await signUp.mutateAsync(signUpData);
   };
 
@@ -44,11 +44,12 @@ export const SignUpForm = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {signUp.error && (
+            {signUp.error ? (
               <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
-                {signUp.error.message || "An error occurred during sign up"}
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                {(signUp.error as any)?.message || "An error occurred during sign up"}
               </div>
-            )}
+            ) : null}
 
             <div className="space-y-2">
               <label htmlFor="name" className="text-sm font-medium">

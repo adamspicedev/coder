@@ -246,29 +246,32 @@ function runTests(code: string, tests: unknown[]): Array<{
   error: string | null;
   description?: string;
 }> {
-  return tests.map((test: any) => {
+  return tests.map((test: unknown) => {
     try {
       // Create a safe evaluation context
-      const testFunction = new Function('solution', `return ${test.test}`);
+      const testObj = test as { test: string; name: string; description?: string };
+      const testFunction = new Function('solution', `return ${testObj.test}`);
       const result = testFunction(code);
       return {
-        name: test.name,
+        name: testObj.name,
         passed: result === true,
         error: null,
-        description: test.description
+        description: testObj.description
       };
     } catch (error) {
+      const testObj = test as { name: string; description?: string };
       return {
-        name: test.name,
+        name: testObj.name,
         passed: false,
         error: error instanceof Error ? error.message : 'Unknown error',
-        description: test.description
+        description: testObj.description
       };
     }
   });
 }
 
 // Helper function to handle errors consistently
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function handleError(error: unknown, c: any) {
   if (error instanceof Error) {
     return c.json({ error: error.message }, 400);

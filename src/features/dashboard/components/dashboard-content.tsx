@@ -152,7 +152,7 @@ export function DashboardContent() {
                 {activeTab === "settings" && "Settings"}
               </h1>
               <p className="text-gray-600">
-                Welcome back, {user.name}! Here's what's happening today.
+                Welcome back, {user.name}! Here&apos;s what&apos;s happening today.
               </p>
             </div>
 

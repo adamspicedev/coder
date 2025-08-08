@@ -29,7 +29,8 @@ export default function ChallengesPage() {
     setViewMode('edit');
   };
 
-  const handleSaveChallenge = (challenge: Challenge) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleSaveChallenge = (_challenge: Challenge) => {
     setSelectedChallenge(null);
     setViewMode('list');
   };
