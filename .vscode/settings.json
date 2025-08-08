@@ -1,0 +1,14 @@
+{
+    "yaml.schemas": {
+      "https://json.schemastore.org/github-workflow.json": "file:///Users/emarref/Projects/TenXHQ/money-sweetspot/.github/workflows/deploy.yaml"
+    },
+    "tailwindCSS.experimental.classRegex": [["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]],
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "always",
+      "source.organizeImports": "always"
+    },
+    "files.associations": {
+      "*.css": "tailwindcss"
+    }
+  }

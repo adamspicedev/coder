@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Coder - Learn to Code</string>
+    <string name="title_activity_main">Coder - Learn to Code</string>
+    <string name="package_name">com.coder.saas</string>
+    <string name="custom_url_scheme">com.coder.saas</string>
+</resources>
